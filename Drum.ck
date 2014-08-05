@@ -1,11 +1,12 @@
 public class Drum{
-	SndBuf buf;
-	buf => dac;
-	int measures[64][64];
+	SndBuf buffers[5];
+
 	0 => int currBeat;
 	0 => int currMeasure;
-	int beatLength[64];
+	int beatLength[32];
 	int measureCount;
+
+	int measures[32][32];
 
 	fun void loadPattern(string pattern){
 		0 => int beat;
@@ -13,13 +14,13 @@ public class Drum{
 		for(0 => int i; i< pattern.length(); i++){
 			pattern.substring(i, 1) => string ch;
 			if(ch == "x"){
-				1 => measures[measure][beat];
+				1 @=> measures[measure][beat];
 				beat++;
 			} else if(ch == ".") {
-				0 => measures[measure][beat];
+				0 @=> measures[measure][beat];
 				beat++;
 			} else if(ch == "|") {
-				beat+1 => beatLength[measure];
+				beat+1 @=> beatLength[measure];
 
 				measure++;
 				0 => beat;
@@ -27,7 +28,7 @@ public class Drum{
 				;
 			}
 		}		
-		beat+1 => beatLength[measure];
+		beat+1 @=> beatLength[measure];
 		measure++;
 		0 => beat;
 
@@ -36,27 +37,35 @@ public class Drum{
 	}
 
 	fun void loadSound(string file){
-		file => buf.read;
+		for(0 => int i; i<buffers.size(); i++){
+			1024 => buffers[i].chunks;
+			file => buffers[i].read;
+			buffers[i] => dac;
+		}
 	}
 
 	fun void playSound(){
-		0 => buf.pos;
+		
+		0 => buffers[currBeat%4].pos;
 
-    	measures[currMeasure][currBeat] * (100 / 127.0) * 0.9 => buf.gain;
-    	(100 / 127.0) * 0.2 + 0.9 => buf.rate;
+		measures[currMeasure][currBeat] * 1 => buffers[currBeat%4].gain;
+		1.05 => buffers[currBeat%4].rate;
 
-    	<<< currBeat >>>;
+		
 
+		
+		<<< currBeat >>>;
     	currBeat++;
 
     	//check if new meassure
     	if(currBeat == beatLength[currMeasure]-1){
-    		<<< "new measure" >>>;
+    		<<< "new measure ", currMeasure >>>;
     		0 => currBeat;
     		currMeasure++; 
     		//check if loop
 	    	if(currMeasure == measureCount){
 	    		<<< "new loop" >>>;
+	    		<<< measures[0][0] >>>;
 
 	    		0 => currMeasure;
 	    	}
@@ -65,22 +74,14 @@ public class Drum{
 }
 
 FileRead fr;
+Looper loop;
 
 Drum drum;
 drum.loadSound("kick.wav");
 
-float bpm;
-float spb;
-dur quarter;
-
 while(true) {
 	drum.loadPattern(fr.readString("drums","...."));
 
-	drum.playSound();
-
-	fr.readInt("bpm",100) => bpm;
-	60.0/bpm => spb;
-
-	1::second * spb => dur quarter;
-	quarter => now;
+	playSound();
+	loop.advance(drum.beatLength[drum.currMeasure]-1);
 }

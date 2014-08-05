@@ -14,6 +14,7 @@ public class FileRead {
 		// default value
 		if( !fio.good() )
 		{
+			fio.close();
 			return defaultint;
 		}
 
@@ -22,6 +23,7 @@ public class FileRead {
 		// read the value
 		while( fio => value )
 		{
+			fio.close();
 		    return value;
 		}
 
@@ -41,6 +43,7 @@ public class FileRead {
 		// ensure it's ok
 		if( !fio.good() )
 		{
+			fio.close();
 		    return defaultstring;
 		}
 
@@ -49,6 +52,7 @@ public class FileRead {
 		// loop until end
 		while( fio => value )
 		{
+			fio.close();
 			return value;
 		}
 	}
