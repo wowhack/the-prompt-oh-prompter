@@ -1,9 +1,10 @@
 public class FileRead {
+	string path;
 
 	fun int readInt(string parameter, int defaultint) {
 
 		// parameter file
-		me.sourceDir() + "/live/" + parameter => string filename;
+		path + "/live/" + parameter => string filename;
 
 		// instantiate
 		FileIO fio;
@@ -32,7 +33,9 @@ public class FileRead {
 	fun string readString(string parameter, string defaultstring) {
 
 		// parameter file
-		me.sourceDir() + "/live/" + parameter => string filename;
+		path + "/live/" + parameter => string filename;
+
+		<<< filename >>>;
 
 		// instantiate
 		FileIO fio;
@@ -53,6 +56,7 @@ public class FileRead {
 		while( fio => value )
 		{
 			fio.close();
+			<<< value >>>;
 			return value;
 		}
 	}

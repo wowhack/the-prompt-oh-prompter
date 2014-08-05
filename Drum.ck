@@ -50,9 +50,6 @@ public class Drum{
 
 		measures[currMeasure][currBeat] * 1 => buffers[currBeat%4].gain;
 		1.05 => buffers[currBeat%4].rate;
-
-		
-
 		
 		<<< currBeat >>>;
     	currBeat++;
@@ -71,27 +68,4 @@ public class Drum{
 	    	}
     	}
 	}
-}
-
-"drums" => string drumname;
-
-if( me.args() ) me.arg(0) => drumname;
-
-FileRead fr;
-Looper loop;
-
-Drum drum;
-string soundName;
-
-while(true) {
-	fr.readString(drumname+"_smp","kick.wav") => string newSoundName;
-	<<
-	if(newSoundName!=soundName) {
-		newSoundName=>soundName;
-		drum.loadSound(soundName);
-	}
-	drum.loadPattern(fr.readString(drumname+"_ptn","...."));
-
-	drum.playSound();
-	loop.advance(drum.beatLength[drum.currMeasure]-1);
 }
