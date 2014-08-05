@@ -39,6 +39,30 @@ public class FileRead {
 
 	}
 
+	fun void set(string parameter,string value) {
+		pathWrapper.path + "/live/" + parameter => string filename;
+
+		// instantiate
+		FileIO fout;
+
+		// open the file
+		fout.open( filename, FileIO.WRITE );
+
+		// test
+		if( !fout.good() )
+		{
+		    cherr <= "can't open file for writing..." <= IO.newline();
+		    return;
+		}
+
+		fout.write( value );
+
+		// close the thing
+		fout.close();
+
+		return;
+	}
+
 	fun string readString(string parameter, string defaultstring) {
 
 		// parameter file
