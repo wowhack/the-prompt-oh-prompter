@@ -10,13 +10,6 @@
 	Drum drum;
 	string soundName;
 
-	if( me.args()>1 ) {
-		me.arg(1) => fr.path;
-	} else {
-		me.sourceDir() => fr.path;
-	}
-
-
 	loop.synchronize();
 
 	while(true) {
