@@ -55,13 +55,13 @@ public class FileRead {
 
 }
 
-FileRead fr;
+//FileRead fr;
 
 // infinite time loop
-while( true )
-{
-    // print current bpm in seconds
-    <<< "bpm:", fr.readInt("bpm",120) >>>; 
-    <<< "drums:", fr.readString("drums","xx") >>>; 
-    1::second => now;
-}
+//while( true )
+//{
+//    // print current bpm in seconds
+//    <<< "bpm:", fr.readInt("bpm",120) >>>; 
+//    <<< "drums:", fr.readString("drums","xx") >>>; 
+//    1::second => now;
+//}
