@@ -6,6 +6,9 @@
 	MidiIn min;
 	MidiMsg msg;
 
+	LoopRecorder loopRecorder;
+	0 => int isRecording;
+
 	if( !min.open( device ) ) me.exit();
 
 	<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
@@ -28,7 +31,7 @@
 	fun void handler()
 	{
 	    // don't connect to dac until we need it
-	    Rhodey s;
+	    BeeThree s;
 	    Event off;
 	    int note;
 
@@ -36,6 +39,10 @@
 	    while( true )
 	    {
 	        on => now;
+	        if(on.note == 34){
+	        	startRec();
+	        	continue;
+	        }
 	        <<< "on" >>>;
 	        on.note => note;
 	        // dynamically repatch
@@ -47,12 +54,19 @@
 
 	        off => now;
 	        <<< "off" >>>;
-	        //0 => s.noteOn;
+	        0 => s.noteOn;
 	        //null @=> on;
 	        //null @=> us[note];
 	        //100::ms => now;
 	        //s =< g;
 	    }
+	}
+
+	fun void startRec(){
+		
+			<<< "init rec" >>>;
+			loopRecorder.recordFromGain(g);
+		
 	}
 
 	// spork handlers, one for each voice
