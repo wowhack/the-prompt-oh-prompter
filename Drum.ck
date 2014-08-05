@@ -73,15 +73,25 @@ public class Drum{
 	}
 }
 
+"drums" => string drumname;
+
+if( me.args() ) me.arg(0) => drumname;
+
 FileRead fr;
 Looper loop;
 
 Drum drum;
-drum.loadSound("kick.wav");
+string soundName;
 
 while(true) {
-	drum.loadPattern(fr.readString("drums","...."));
+	fr.readString(drumname+"_smp","kick.wav") => string newSoundName;
+	<<
+	if(newSoundName!=soundName) {
+		newSoundName=>soundName;
+		drum.loadSound(soundName);
+	}
+	drum.loadPattern(fr.readString(drumname+"_ptn","...."));
 
-	playSound();
+	drum.playSound();
 	loop.advance(drum.beatLength[drum.currMeasure]-1);
 }
