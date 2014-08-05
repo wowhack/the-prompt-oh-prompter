@@ -28,7 +28,7 @@
 	fun void handler()
 	{
 	    // don't connect to dac until we need it
-	    Rhodey s;
+	    BeeThree s;
 	    Event off;
 	    int note;
 
@@ -47,7 +47,7 @@
 
 	        off => now;
 	        <<< "off" >>>;
-	        //0 => s.noteOn;
+	        0 => s.noteOn;
 	        //null @=> on;
 	        //null @=> us[note];
 	        //100::ms => now;
