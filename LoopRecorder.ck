@@ -9,7 +9,7 @@ public class LoopRecorder{
 
 		loop.synchronize();
 		<<< "=========================== started rec" >>>;
-
+		saveme.clear;
 		saveme.record(1);
 
 		loop.advance(1);
