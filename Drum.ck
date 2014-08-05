@@ -51,17 +51,16 @@ public class Drum{
 		measures[currMeasure][currBeat] * 0.6 => buffers[currBeat%4].gain;
 		1.05 => buffers[currBeat%4].rate;
 		
-		<<< currBeat >>>;
+		<<<"Beat no: ", currBeat >>>;
     	currBeat++;
 
     	//check if new meassure
     	if(currBeat == beatLength[currMeasure]-1){
-    		<<< "new measure ", currMeasure >>>;
+    		<<< "Started meassure: ", currMeasure >>>;
     		0 => currBeat;
     		currMeasure++; 
     		//check if loop
 	    	if(currMeasure == measureCount){
-	    		<<< "new loop" >>>;
 	    		<<< measures[0][0] >>>;
 
 	    		0 => currMeasure;

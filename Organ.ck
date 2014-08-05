@@ -43,7 +43,6 @@
 	        	startRec();
 	        	continue;
 	        }
-	        <<< "on" >>>;
 	        on.note => note;
 	        // dynamically repatch
 	        s => g;
@@ -53,7 +52,6 @@
 	        off @=> us[note];
 
 	        off => now;
-	        <<< "off" >>>;
 	        0 => s.noteOn;
 	        //null @=> on;
 	        //null @=> us[note];
@@ -63,10 +61,8 @@
 	}
 
 	fun void startRec(){
-		
-			<<< "init rec" >>>;
+	
 			loopRecorder.recordFromGain(g);
-		
 	}
 
 	// spork handlers, one for each voice
@@ -83,7 +79,6 @@
 	        //if( msg.data1 != 144 )
 	        //    continue;
 
-	        <<< "midi recv",msg.data1 >>>;
 
 	        // check velocity
 	        if( msg.data3 > 0 && msg.data1 >= 140 )
