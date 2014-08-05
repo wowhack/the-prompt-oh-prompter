@@ -64,11 +64,23 @@ public class Drum{
 	}
 }
 
+FileRead fr;
+
 Drum drum;
-drum.loadPattern("xx..|.x.x|");
-drum.loadSound("AOW BD 1_FIS1.wav");
+drum.loadSound("kick.wav");
+
+float bpm;
+float spb;
+dur quarter;
 
 while(true) {
+	drum.loadPattern(fr.readString("drums","...."));
+
 	drum.playSound();
-	0.3::second=>now;
+
+	fr.readInt("bpm",100) => bpm;
+	60.0/bpm => spb;
+
+	1::second * spb => dur quarter;
+	quarter => now;
 }
