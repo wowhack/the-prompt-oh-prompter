@@ -20,7 +20,9 @@
 			<<< soundName >>>;
 			drum.loadSound(soundName);
 		}
-		drum.loadPattern(fr.readString(drumname+"_ptn","...."));
+		if(drum.currBeat==0) {
+			drum.loadPattern(fr.readString(drumname+"_ptn","...."));
+		}
 
 		drum.playSound();
 		loop.advance(drum.beatLength[drum.currMeasure]-1);
