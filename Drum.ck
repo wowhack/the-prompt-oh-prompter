@@ -48,7 +48,7 @@ public class Drum{
 		
 		0 => buffers[currBeat%4].pos;
 
-		measures[currMeasure][currBeat] * 1 => buffers[currBeat%4].gain;
+		measures[currMeasure][currBeat] * 0.6 => buffers[currBeat%4].gain;
 		1.05 => buffers[currBeat%4].rate;
 		
 		<<< currBeat >>>;
