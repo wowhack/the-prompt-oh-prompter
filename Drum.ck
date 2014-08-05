@@ -50,9 +50,6 @@ public class Drum{
 
 		measures[currMeasure][currBeat] * 1 => buffers[currBeat%4].gain;
 		1.05 => buffers[currBeat%4].rate;
-
-		
-
 		
 		<<< currBeat >>>;
     	currBeat++;
@@ -71,17 +68,4 @@ public class Drum{
 	    	}
     	}
 	}
-}
-
-FileRead fr;
-Looper loop;
-
-Drum drum;
-drum.loadSound("kick.wav");
-
-while(true) {
-	drum.loadPattern(fr.readString("drums","...."));
-
-	playSound();
-	loop.advance(drum.beatLength[drum.currMeasure]-1);
 }
