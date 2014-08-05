@@ -6,6 +6,9 @@
 	MidiIn min;
 	MidiMsg msg;
 
+	LoopRecorder loopRecorder;
+	0 => int isRecording;
+
 	if( !min.open( device ) ) me.exit();
 
 	<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
@@ -36,6 +39,10 @@
 	    while( true )
 	    {
 	        on => now;
+	        if(on.note == 34){
+	        	startRec();
+	        	continue;
+	        }
 	        <<< "on" >>>;
 	        on.note => note;
 	        // dynamically repatch
@@ -53,6 +60,13 @@
 	        //100::ms => now;
 	        //s =< g;
 	    }
+	}
+
+	fun void startRec(){
+		
+			<<< "init rec" >>>;
+			loopRecorder.recordFromGain(g);
+		
 	}
 
 	// spork handlers, one for each voice
