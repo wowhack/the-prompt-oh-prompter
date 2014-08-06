@@ -15,7 +15,7 @@ the-chucklers
 
 	int: Beats per minute, set before setup.
 
-### live/<drumname>_ptn
+### live/drumname_ptn
 
 	pattern: Pattern for the drum to play
 
@@ -26,21 +26,21 @@ the-chucklers
 	example: xx.xx.xx.xx.|xx.xx....xxx
 			 Gives a 2 measures long 12/8 pattern.
 
-### live/<drumname>_smp
+### live/drumname_smp
 
 	filename: Filename for the drum sample.
 
 	example: "kick.wav"
 
-### live/<loopname>_instr
+### live/loopname_instr
 
 	string: Instrument to use, eg. Organ,Synth,Saxophone etc.
 
-### live/<loopname>_arm
+### live/loopname_arm
 
 	bool: 0 or 1 whether the looper should listen to midi events
 
-### live/<loopname>_rec
+### live/loopname_rec
 
 	int: Number of measures to record, starts recording on the next measure.
 
