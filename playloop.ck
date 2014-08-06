@@ -1,4 +1,6 @@
 
+
+
 "loop" => string loopname;
 0 => int device;
 
@@ -25,9 +27,18 @@ loop.synchronize();
 
 Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
 
+fun void instantHandler() {
+	while(true) {
+		FileRead.readInt(loopname+"_arm",1) @=> instrument.armed;
+		<<< instrument.armed >>>;
+		100::ms => now;
+	}
+}
+
+spork ~ instantHandler();
+
 while(true) {
 	FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
-	FileRead.readInt(loopname+"_arm",1) @=> instrument.armed;
 	<<< "measuresToRecord:",measuresToRecord >>>;
 	if(measuresToRecord>0) {
 		lRec.recordFromGain(instrument.getGain(),measuresToRecord);
