@@ -6,7 +6,7 @@ fi
 
 # setup
 if [ "$1" == "setup" ]; then 
-	chuck + fileread.ck:`pwd` Looper.ck Drum.ck LoopRecorder.ck NoteEvent.ck MidiInstrument.ck Organ.ck Synth.ck
+	chuck + fileread.ck:`pwd` Looper.ck Drum.ck LoopRecorder.ck NoteEvent.ck MidiInstrument.ck Organ.ck Synth.ck Saxophone.ck
 	exit
 fi
 

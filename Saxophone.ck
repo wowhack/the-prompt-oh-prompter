@@ -1,4 +1,4 @@
-public class Organ extends MidiInstrument{
+public class Saxophone extends MidiInstrument{
 	fun void setup() {
 		//setInstrument(bt);
 	}
@@ -7,11 +7,11 @@ public class Organ extends MidiInstrument{
 	// handler shred for a single voice
 	fun void handler(NoteEvent onEvent)
 	{
-	   	BeeThree bt;
+	   	Saxofony m;
 		Event off;
 	    int note;
 
-		bt => g;
+		m => g;
 
 	    // inifinite time loop
 	    while( true )
@@ -25,27 +25,25 @@ public class Organ extends MidiInstrument{
 	        // dynamically repatch
 	        //s => g;
 
-	        Std.mtof( note ) => bt.freq;
+	        Std.mtof( note ) => m.freq;
 
 	        //1 => s.noteOn;
-	      	onEvent.velocity / 127.0 => float vel;
+	        onEvent.velocity / 127.0 => float vel;
 
-	        vel => bt.noteOn;
+	        vel => m.noteOn;
 
 	        off @=> us[note];
 
 	        off => now;
         
         	//null @=> us[note];
-
-	        while(vel >0.0001){
-        		vel => bt.noteOn;
-        		vel - 0.0001 => vel;	
+        	while(vel >0.01){
+        		vel => m.noteOn;
+        		vel - 0.01 => vel;	
         	}
-        	0 => bt.noteOn;
+        	0 => m.noteOn;
+	        
 	        
 	    }
 	}
 }
-
-

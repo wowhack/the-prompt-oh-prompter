@@ -16,7 +16,10 @@ if(instrumentName.lower()=="organ") {
 	new Organ @=> instrument;
 } else if(instrumentName.lower()=="synth") {
 	new Synth @=> instrument;
-} else {
+} else if(instrumentName.lower()=="sax"){
+	new Saxophone @=> instrument;
+}
+else {
 	<<< "### NO INSTRUMENT SELECTED FOR LOOPER ",loopname,", ABORTING!! ###" >>>;
 	me.exit();
 }
