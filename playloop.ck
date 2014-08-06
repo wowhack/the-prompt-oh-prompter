@@ -21,16 +21,23 @@ Looper loop;
 instrument.setup();
 instrument.setupMidi(device);
 spork ~ instrument.startInstrument();
-<<< "before synchronize" >>>;
+//<<< "before synchronize" >>>;
 loop.synchronize();
-<<< "after synchronize" >>>;
+//<<< "after synchronize" >>>;
 
 Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
 
 fun void instantHandler() {
 	while(true) {
 		FileRead.readInt(loopname+"_arm",1) @=> instrument.armed;
-		<<< instrument.armed >>>;
+
+		FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
+		if(measuresToRecord>0) {
+			<<< "=== WILL RECORD NEXT ",measuresToRecord,"MEASURES ON ",loopname," ===" >>>;
+			measuresToRecord @=> measuresToPlay;
+			lRec.recordFromGain(instrument.getGain(),measuresToRecord);
+			Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
+		}
 		100::ms => now;
 	}
 }
@@ -38,25 +45,18 @@ fun void instantHandler() {
 spork ~ instantHandler();
 
 while(true) {
-	FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
-	<<< "measuresToRecord:",measuresToRecord >>>;
-	if(measuresToRecord>0) {
-		lRec.recordFromGain(instrument.getGain(),measuresToRecord);
-		Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
-		measuresToRecord @=> measuresToPlay;
-	}
-
-	if(lRec.finishedRecording==1) {
-		0=>mute;
-	}
-
 	if(!mute) {
-		lRec.saveme.play(1);
+		<<< "% LOOPER ",loopname," NEW MEASURE ",currentMeasure >>>;
+
 		if(currentMeasure % measuresToPlay == 0) {
+			lRec.saveme.play(1);
 			lRec.saveme.playPos(0::ms);
 		}
-		<<< "€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€PLAY€€€€€" >>>;
 		currentMeasure++;
 	}
 	loop.advance(1);
+
+	if(lRec.finishedRecording==0 && lRec.measuresleft==0) {
+		0=>mute;
+	}
 }
