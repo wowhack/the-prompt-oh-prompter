@@ -1,10 +1,9 @@
 public class Looper{
-	FileRead fr;
 	float bpm;
 	float spb;
 
 	fun void synchronize() {
-		fr.readInt("bpm",100) => bpm;
+		FileRead.readInt("bpm",100) => bpm;
 		(60.0/bpm)*(4.0) => spb;
 		1::second * spb => dur duration;
 		duration - (now % duration) => now;	

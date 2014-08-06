@@ -5,8 +5,9 @@ class PathWrapper
 
 public class FileRead {
 	static PathWrapper @ pathWrapper;
+	static FileIO @ fio;
 
-	fun int readInt(string parameter, int defaultint) {
+	fun static int readInt(string parameter, int defaultint) {
 
 		// parameter file
 		pathWrapper.path + "/live/" + parameter => string filename;
@@ -14,7 +15,7 @@ public class FileRead {
 		<<< filename >>>;
 
 		// instantiate
-		FileIO fio;
+		
 
 		// open the file
 		fio.open( filename, FileIO.READ );
@@ -22,11 +23,12 @@ public class FileRead {
 		// default value
 		if( !fio.good() )
 		{
-			<<< fio >>>;
+			<<< "fio not good:",fio >>>;
 			fio.close();
 			return defaultint;
 		}
 
+		string strval;
 		int value;
 
 		// read the value
@@ -39,7 +41,7 @@ public class FileRead {
 
 	}
 
-	fun void set(string parameter,string value) {
+	fun static void set(string parameter,int value) {
 		pathWrapper.path + "/live/" + parameter => string filename;
 
 		// instantiate
@@ -63,7 +65,7 @@ public class FileRead {
 		return;
 	}
 
-	fun string readString(string parameter, string defaultstring) {
+	fun static string readString(string parameter, string defaultstring) {
 
 		// parameter file
 		pathWrapper.path + "/live/" + parameter => string filename;
@@ -103,6 +105,8 @@ if( me.args() ) {
 	new PathWrapper @=> FileRead.pathWrapper;
 	me.sourceDir() @=> FileRead.pathWrapper.path;
 }
+
+new FileIO @=> FileRead.fio;
 
 //FileRead fr;
 

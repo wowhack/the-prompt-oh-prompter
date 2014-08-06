@@ -1,3 +1,4 @@
+
 public class MidiInstrument{
 	
 	MidiIn min;
@@ -5,48 +6,26 @@ public class MidiInstrument{
 
 	int device;
 
-	class NoteEvent extends Event{
-	    int note;
-	    int velocity;
-	}
+	
 
 	// the event
 	NoteEvent on;
 	// array of ugen's handling each note
 	Event @ us[128];
 
-	StkInstrument s;
 	Gain g =>JCRev r => dac;
 	.1 => g.gain;
 	.01 => r.mix;
 
-
 	// handler shred for a single voice
-	fun void handler()
+	fun void handler(NoteEvent onEvent)
 	{
-	    Event off;
-	    int note;
+	    
+	}
 
-	    // inifinite time loop
-	    while( true )
-	    {
-	        on => now;
-	        if(on.note == 34){
-	        	startRec();
-	        	continue;
-	        }
-	        on.note => note;
-	        // dynamically repatch
-	        s => g;
-	        Std.mtof( note ) => s.freq;
-	        //1 => s.noteOn;
-	        on.velocity / 127.0 => s.noteOn;
-	        off @=> us[note];
-
-	        off => now;
-	        0 => s.noteOn;
-	        
-	    }
+	fun void setup() 
+	{
+		//override this
 	}
 
 	fun void startRec(){
@@ -69,27 +48,28 @@ public class MidiInstrument{
 	fun void startInstrument(){
 
 		// spork handlers, one for each voice
-		for( 0 => int i; i < 20; i++ ) spork ~ handler();
+		for( 0 => int i; i < 20; i++ ) spork ~ handler(on);
 
 		// infinite time loop
 		while( true ){
 		    // wait on midi event
 		    min => now;
-
+		  
 		    // get the midimsg
 		    while( min.recv( msg ) ){
 		        // catch only noteon
 		        //if( msg.data1 != 144 )
 		        //    continue;
 
+		        <<< "data1:",msg.data1 >>>;
 
 		        // check velocity
 		        if( msg.data3 > 0 && msg.data1 >= 140 )
 		        {
 		            // store midi note number
-		            msg.data2 => on.note;
+		            msg.data2 @=> on.note;
 		            // store velocity
-		            msg.data3 => on.velocity;
+		            msg.data3 @=> on.velocity;
 		            // signal the event
 		            on.signal();
 		            // yield without advancing time to allow shred to run

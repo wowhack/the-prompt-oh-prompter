@@ -4,7 +4,6 @@
 
 	<<< drumname >>>;
 
-	FileRead fr;
 	Looper loop;
 
 	Drum drum;
@@ -13,7 +12,7 @@
 	loop.synchronize();
 
 	while(true) {
-		fr.readString(drumname+"_smp","kick.wav") => string newSoundName;
+		FileRead.readString(drumname+"_smp","kick.wav") => string newSoundName;
 
 		if(newSoundName!=soundName) {
 			newSoundName=>soundName;
@@ -21,7 +20,7 @@
 			drum.loadSound(soundName);
 		}
 		if(drum.currBeat==0) {
-			drum.loadPattern(fr.readString(drumname+"_ptn","...."));
+			drum.loadPattern(FileRead.readString(drumname+"_ptn","...."));
 		}
 
 		drum.playSound();

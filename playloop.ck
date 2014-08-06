@@ -8,35 +8,43 @@ if( me.args()>0 ) {
 }
 
 new Organ @=> MidiInstrument instrument;
-FileRead fr;
 LoopRecorder lRec;
 1 => int mute;
 int measuresToRecord;
+int measuresToPlay;
+0 @=> int currentMeasure;
 
 Looper loop;
 
+instrument.setup();
 instrument.setupMidi(device);
-instrument.startInstrument();
-
+spork ~ instrument.startInstrument();
+<<< "before synchronize" >>>;
 loop.synchronize();
+<<< "after synchronize" >>>;
+
+Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
 
 while(true) {
-	fr.readInt(loopname+"_rec",0) => measuresToRecord;
-
+	FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
+	<<< "measuresToRecord:",measuresToRecord >>>;
 	if(measuresToRecord>0) {
 		lRec.recordFromGain(instrument.getGain(),measuresToRecord);
-		0=>measuresToRecord;
-		fr.set(loopname+"_rec","0");
+		Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
+		measuresToRecord @=> measuresToPlay;
 	}
 
-	if(lRec.finishedRecording) {
+	if(lRec.finishedRecording==1) {
 		0=>mute;
 	}
 
 	if(!mute) {
 		lRec.saveme.play(1);
-		lRec.saveme.playPos(0::ms);
+		if(currentMeasure % measuresToPlay == 0) {
+			lRec.saveme.playPos(0::ms);
+		}
 		<<< "€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€PLAY€€€€€" >>>;
+		currentMeasure++;
 	}
 	loop.advance(1);
 }
