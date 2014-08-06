@@ -12,8 +12,6 @@ public class FileRead {
 		// parameter file
 		pathWrapper.path + "/live/" + parameter => string filename;
 
-		<<< filename >>>;
-
 		// instantiate
 		
 
@@ -23,7 +21,6 @@ public class FileRead {
 		// default value
 		if( !fio.good() )
 		{
-			<<< "fio not good:",fio >>>;
 			fio.close();
 			return defaultint;
 		}
@@ -35,7 +32,6 @@ public class FileRead {
 		while( fio => value )
 		{
 			fio.close();
-			<<< value >>>;
 		    return value;
 		}
 
@@ -70,8 +66,6 @@ public class FileRead {
 		// parameter file
 		pathWrapper.path + "/live/" + parameter => string filename;
 
-		<<< filename >>>;
-
 		// instantiate
 		FileIO fio;
 
@@ -91,7 +85,6 @@ public class FileRead {
 		while( fio => value )
 		{
 			fio.close();
-			<<< value >>>;
 			return value;
 		}
 	}

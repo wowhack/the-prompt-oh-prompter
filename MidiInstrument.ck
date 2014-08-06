@@ -61,8 +61,6 @@ public class MidiInstrument{
 		        //if( msg.data1 != 144 )
 		        //    continue;
 
-		        <<< "data1:",msg.data1 >>>;
-
 		        // check velocity
 		        if( armed && msg.data3 > 0 && msg.data1 >= 140 )
 		        {

@@ -2,7 +2,7 @@
 
 	if( me.args()>0 ) me.arg(0) => drumname;
 
-	<<< drumname >>>;
+	<<< "$ ADDED DRUM ",drumname >>>;
 
 	Looper loop;
 
@@ -16,13 +16,14 @@
 
 		if(newSoundName!=soundName) {
 			newSoundName=>soundName;
-			<<< soundName >>>;
+			<<< "$ SET NEW SOUND ",soundName," FOR DRUM ",drumname >>>;
 			drum.loadSound(soundName);
 		}
 		if(drum.currBeat==0) {
 			drum.loadPattern(FileRead.readString(drumname+"_ptn","...."));
 		}
 
+		<<<"% Drum: ",drumname," Beat: ", drum.currBeat+1 >>>;
 		drum.playSound();
 		loop.advance(drum.beatLength[drum.currMeasure]-1);
 	}

@@ -30,8 +30,6 @@ public class Organ extends MidiInstrument{
 	        //1 => s.noteOn;
 	        onEvent.velocity / 127.0 => bt.noteOn;
 
-	        <<< "note:",note >>>;
-
 	        off @=> us[note];
 
 	        off => now;

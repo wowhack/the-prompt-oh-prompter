@@ -11,7 +11,6 @@ public class Looper{
 	}
 
 	fun void advance(float part){
-		<<< "advance ",part >>>;
 		if(part==0.0) {
 			4.0=>part;
 		}
