@@ -8,6 +8,8 @@ public class Drum{
 
 	int measures[32][32];
 
+	Dyno dyn;
+
 	fun void loadPattern(string pattern){
 		0 => int beat;
 		0 => int measure;
@@ -39,8 +41,10 @@ public class Drum{
 	fun void loadSound(string file){
 		for(0 => int i; i<buffers.size(); i++){
 			1024 => buffers[i].chunks;
+			0 => buffers[i].rate;
 			file => buffers[i].read;
-			buffers[i] => dac;
+			buffers[i] => dyn => dac;
+			dyn.compress;
 		}
 	}
 
@@ -48,8 +52,15 @@ public class Drum{
 		
 		0 => buffers[currBeat%4].pos;
 
-		measures[currMeasure][currBeat] * 0.6 => buffers[currBeat%4].gain;
-		1.05 => buffers[currBeat%4].rate;
+		float multiply;
+		if(currBeat == 0){
+			Std.rand2f(0.7, 0.75) => multiply;
+		}else{
+			Std.rand2f(0.55, 0.65) => multiply;
+		}
+
+		measures[currMeasure][currBeat] * multiply => buffers[currBeat%4].gain;
+		1 => buffers[currBeat%4].rate;
 		
 		<<<"Beat no: ", currBeat >>>;
     	currBeat++;
