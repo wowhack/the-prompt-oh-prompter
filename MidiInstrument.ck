@@ -5,7 +5,7 @@ public class MidiInstrument{
 	MidiMsg msg;
 
 	int device;
-
+	1 => int armed;
 	
 
 	// the event
@@ -64,7 +64,7 @@ public class MidiInstrument{
 		        <<< "data1:",msg.data1 >>>;
 
 		        // check velocity
-		        if( msg.data3 > 0 && msg.data1 >= 140 )
+		        if( armed && msg.data3 > 0 && msg.data1 >= 140 )
 		        {
 		            // store midi note number
 		            msg.data2 @=> on.note;

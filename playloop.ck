@@ -27,6 +27,7 @@ Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
 
 while(true) {
 	FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
+	FileRead.readInt(loopname+"_arm",1) @=> instrument.armed;
 	<<< "measuresToRecord:",measuresToRecord >>>;
 	if(measuresToRecord>0) {
 		lRec.recordFromGain(instrument.getGain(),measuresToRecord);
