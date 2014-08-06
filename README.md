@@ -15,6 +15,10 @@ the-chucklers
 
 	int: Beats per minute, set before setup.
 
+### live/drumname_vol
+
+	int: Volume for this drum, 0-100.
+
 ### live/drumname_ptn
 
 	pattern: Pattern for the drum to play
@@ -31,6 +35,10 @@ the-chucklers
 	filename: Filename for the drum sample.
 
 	example: "kick.wav"
+
+### live/loopname_vol
+
+	int: Volume for this loop/instrument, 0-100.
 
 ### live/loopname_instr
 

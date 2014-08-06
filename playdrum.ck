@@ -13,6 +13,7 @@
 
 	while(true) {
 		FileRead.readString(drumname+"_smp","kick.wav") => string newSoundName;
+		FileRead.readInt(drumname+"_vol",50)/100.0 => drum.g.gain;
 
 		if(newSoundName!=soundName) {
 			newSoundName=>soundName;

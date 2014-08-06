@@ -17,6 +17,7 @@ fi
 if [ "$1" == "drum" ]; then 
 	if [ -z "$2" ]; then
 		echo "USAGE: $0 drum <name>"
+		exit
 	fi
 	chuck + playdrum.ck:$2
 	exit
@@ -26,8 +27,9 @@ fi
 if [ "$1" == "instr" ]; then 
 	if [ -z "$2" ]; then
 		echo "USAGE: $0 instr <instrument> <name> <mididevice>"
+		exit
 	fi
 	echo $2 > live/$3_instr
-	chuck + playdrum.ck:$4:$3
+	chuck + playloop.ck:$4:$3
 	exit
 fi

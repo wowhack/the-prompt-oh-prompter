@@ -44,6 +44,7 @@ Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
 fun void instantHandler() {
 	while(true) {
 		FileRead.readInt(loopname+"_arm",1) @=> instrument.armed;
+		FileRead.readInt(loopname+"_vol",50)/100.0 => instrument.getGain().gain;
 
 		FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
 		if(measuresToRecord>0) {

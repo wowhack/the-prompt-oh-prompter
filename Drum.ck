@@ -9,6 +9,7 @@ public class Drum{
 	int measures[32][32];
 
 	Dyno dyn;
+	Gain g;
 
 	fun void loadPattern(string pattern){
 		0 => int beat;
@@ -43,8 +44,8 @@ public class Drum{
 			1024 => buffers[i].chunks;
 			0 => buffers[i].rate;
 			file => buffers[i].read;
-			buffers[i] => dyn =>Gain g => dac;
-			0.5=>g.gain;
+			buffers[i] => dyn => g => dac;
+			//0.5=>g.gain;
 			dyn.compress;
 		}
 	}
