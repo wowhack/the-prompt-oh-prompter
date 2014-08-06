@@ -43,7 +43,8 @@ public class Drum{
 			1024 => buffers[i].chunks;
 			0 => buffers[i].rate;
 			file => buffers[i].read;
-			buffers[i] => dyn => dac;
+			buffers[i] => dyn =>Gain g => dac;
+			0.5=>g.gain;
 			dyn.compress;
 		}
 	}
