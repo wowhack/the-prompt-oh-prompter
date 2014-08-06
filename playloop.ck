@@ -44,11 +44,14 @@ Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
 fun void instantHandler() {
 	while(true) {
 		FileRead.readInt(loopname+"_arm",1) @=> instrument.armed;
-		FileRead.readInt(loopname+"_vol",50)/100.0 => instrument.getGain().gain;
+		FileRead.readInt(loopname+"_vol",50)/100.0 => float volume;
+		volume => instrument.getGain().gain;
+		lRec.saveme.voiceGain(0,volume*2);
 
 		FileRead.readInt(loopname+"_rec",0) @=> measuresToRecord;
 		if(measuresToRecord>0) {
 			<<< "=== WILL RECORD NEXT ",measuresToRecord,"MEASURES ON ",loopname," ===" >>>;
+			1 @=> mute;
 			measuresToRecord @=> measuresToPlay;
 			lRec.recordFromGain(instrument.getGain(),measuresToRecord);
 			Std.system("rm "+FileRead.pathWrapper.path+"/live/"+loopname+"_rec");
