@@ -11,6 +11,10 @@ public class Synth extends MidiInstrument{
 		Event off;
 	    int note;
 
+	    0.01 => m.modDepth;
+	    0.8 => m.modSpeed;
+	    0.2 => m.filterQ;
+
 		m => g;
 
 	    // inifinite time loop
@@ -29,8 +33,6 @@ public class Synth extends MidiInstrument{
 
 	        //1 => s.noteOn;
 	        onEvent.velocity / 127.0 => m.noteOn;
-
-	        <<< "note:",note >>>;
 
 	        off @=> us[note];
 

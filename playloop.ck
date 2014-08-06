@@ -9,7 +9,18 @@ if( me.args()>0 ) {
 	me.arg(1) => loopname;
 }
 
-new Organ @=> MidiInstrument instrument;
+FileRead.readString(loopname+"_instr","error") @=> string instrumentName;
+
+MidiInstrument instrument;
+if(instrumentName.lower()=="organ") {
+	new Organ @=> instrument;
+} else if(instrumentName.lower()=="synth") {
+	new Synth @=> instrument;
+} else {
+	<<< "### NO INSTRUMENT SELECTED FOR LOOPER ",loopname,", ABORTING!! ###" >>>;
+	me.exit();
+}
+
 LoopRecorder lRec;
 1 => int mute;
 int measuresToRecord;
